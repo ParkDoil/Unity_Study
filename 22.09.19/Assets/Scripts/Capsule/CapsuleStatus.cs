@@ -19,9 +19,9 @@ public class CapsuleStatus : MonoBehaviour
     {
         _myRenderer = GetComponent<MeshRenderer>();
         _myRenderer.material = _basic;
-        _player = GameObject.FindWithTag("Player");
+        _player = GameObject.Find("Player");
     }
-
+    
     void Update()
     {
         _distance = Vector3.Distance(_player.transform.position, this.transform.position);
@@ -33,6 +33,7 @@ public class CapsuleStatus : MonoBehaviour
         else
         {
             ObjectManager.Instance.RemoveList(this.gameObject);
+            SetNormal();
         }
     }
     public void SetNormal()

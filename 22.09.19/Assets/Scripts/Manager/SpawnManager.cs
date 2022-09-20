@@ -11,8 +11,8 @@ public class SpawnManager : MonoBehaviour
     {
         for (int i = 0; i < 5000; ++i)
         {
-            float x = Random.Range(-100, 101);
-            float z = Random.Range(-100, 101);
+            float x = Random.Range(-100f, 100f);
+            float z = Random.Range(-100f, 100f);
             GameObject Enemy = Instantiate(_enemyPrefab);
 
             Vector3 StartPosition = new Vector3(x, 0f, z);
