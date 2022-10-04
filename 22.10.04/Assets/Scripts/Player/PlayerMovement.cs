@@ -6,16 +6,18 @@ public class PlayerMovement : MonoBehaviour
 {
     private PlayerInput _input;
 
-    [SerializeField]
-    private float _moveSpeed = 5f;
+    [SerializeField] float _moveSpeed = 5f;
+    [SerializeField] float _rotationSpeed = 3f;
 
-    void Start()
+    private void Start()
     {
         _input = GetComponent<PlayerInput>();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         transform.Translate(new Vector3(_input.moveX, 0f, _input.moveZ).normalized * _moveSpeed * Time.deltaTime);
+
+        transform.Rotate(0f, _input.rotateX * _rotationSpeed, 0f, Space.World);
     }
 }

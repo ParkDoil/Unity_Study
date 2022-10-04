@@ -7,6 +7,8 @@ public class PlayerInput : MonoBehaviour
     public float moveX { get; private set; }
     public float moveZ { get; private set; }
 
+    public float rotateX { get; private set; }
+
     public GameObject Head { get; private set; }
 
     private void Start()
@@ -16,7 +18,7 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        moveX = moveZ = 0f;
+        moveX = moveZ = rotateX = 0f;
 
         if (Head.activeSelf == true)
         {
@@ -39,6 +41,8 @@ public class PlayerInput : MonoBehaviour
             {
                 moveZ -= 1f;
             }
+
+            rotateX = Input.GetAxis("Mouse X");
         }
     }
 }
