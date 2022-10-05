@@ -25,7 +25,7 @@ public class WeaponManager : MonoBehaviour
         for (int i = 0; i < _robotArms.Length;)
         {
             int _randomnum = Random.Range(0, _childrenCount);
-            Debug.Log(_randomnum);
+
             if (_isSelect[_randomnum] == false)
             {
                 _isSelect[_randomnum] = true;
