@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 2160668487232475055}
   - component: {fileID: 2519933855237895148}
   m_Layer: 0
-  m_Name: RightLegs
+  m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -453,7 +453,7 @@ Transform:
   - {fileID: 5446567307733441716}
   - {fileID: 4265433046833588442}
   m_Father: {fileID: 6841967846514443461}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3806756266690523646
 GameObject:
@@ -583,9 +583,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8534169017896665829}
-  - {fileID: 1490385145004614478}
   - {fileID: 464514973712314826}
   - {fileID: 8872430825789073970}
+  - {fileID: 1490385145004614478}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -725,7 +725,7 @@ GameObject:
   - component: {fileID: 1244033227623325710}
   - component: {fileID: 2001186054533798752}
   m_Layer: 0
-  m_Name: LeftLeg
+  m_Name: LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -840,7 +840,7 @@ Transform:
   - {fileID: 5591141922933848526}
   - {fileID: 2959236895365838046}
   m_Father: {fileID: 6841967846514443461}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6995482838168312592
 GameObject:
@@ -875,7 +875,7 @@ Transform:
   m_Children:
   - {fileID: 5724081323312922387}
   m_Father: {fileID: 6841967846514443461}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1602737398598471008
 MeshFilter:
