@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IAttackable
 {
-    public void Attack();
+    public void Attack(int damage);
 }
 
 public class Fist : MonoBehaviour, IAttackable
@@ -17,12 +17,12 @@ public class Fist : MonoBehaviour, IAttackable
         _attack = transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().GetComponentInParent<PlayerAttack>();
     }
 
-    public void Attack()
+    public void Attack(int damage)
     {
         if (_isCooldown == false)
         {
             _isCooldown = true;
-            StartCoroutine(FistAttack());
+            StartCoroutine(FistAttack(damage));
         }
         else
         {
@@ -30,7 +30,7 @@ public class Fist : MonoBehaviour, IAttackable
         }
     }
 
-    IEnumerator FistAttack()
+    IEnumerator FistAttack(int damage)
     {
         Debug.Log("ÁÖ¸Ô°ø°Ý ¶Ñ»þ¶Ñ»þ");
 

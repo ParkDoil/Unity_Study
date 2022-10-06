@@ -30,6 +30,7 @@ public class WeaponManager : MonoBehaviour
             {
                 _isSelect[_randomnum] = true;
                 _weapons[_randomnum].transform.SetParent(_robotArms[i].transform);
+                _weapons[_randomnum].transform.position = _robotArms[i].transform.position;
                 ++i;
             }
         }

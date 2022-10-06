@@ -12,12 +12,12 @@ public class Rocket : MonoBehaviour, IAttackable
         _attack = transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().GetComponentInParent<PlayerAttack>();
     }
 
-    public void Attack()
+    public void Attack(int damage)
     {
         if (_isCooldown == false)
         {
             _isCooldown = true;
-            StartCoroutine(RocketAttack());
+            StartCoroutine(RocketAttack(damage));
         }
         else
         {
@@ -25,7 +25,7 @@ public class Rocket : MonoBehaviour, IAttackable
         }
     }
 
-    IEnumerator RocketAttack()
+    IEnumerator RocketAttack(int damage)
     {
         Debug.Log("로켓발사 빵야");
 

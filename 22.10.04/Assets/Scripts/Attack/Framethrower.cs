@@ -11,12 +11,12 @@ public class Framethrower : MonoBehaviour, IAttackable
     {
         _attack = transform.GetComponentInParent<Transform>().GetComponentInParent<Transform>().GetComponentInParent<PlayerAttack>();
     }
-    public void Attack()
+    public void Attack(int damage)
     {
         if (_isCooldown == false)
         {
             _isCooldown = true;
-            StartCoroutine(FramethrowerAttack());
+            StartCoroutine(FramethrowerAttack(damage));
         }
         else
         {
@@ -24,21 +24,16 @@ public class Framethrower : MonoBehaviour, IAttackable
         }
     }
 
-    IEnumerator FramethrowerAttack()
+    IEnumerator FramethrowerAttack(int damage)
     {
-        float _elapsedTime = 0.0f;
-        int _tickDamage = 0;
+        int tick = 0;
         Debug.Log("화염방사 공격 부와아앜");
 
-        while (_tickDamage < 5)
+        while (tick < 10)
         {
-            _elapsedTime += Time.deltaTime;
-            if(_elapsedTime >= 0.5f)
-            {
-                Debug.Log("화르르르르륵");
-                _elapsedTime = 0.0f;
-                ++_tickDamage;
-            }
+            Debug.Log("화르르륵");
+            ++tick;
+            yield return new WaitForSeconds(0.1f);
         }
 
         _attack.AttackFinish();
