@@ -30,9 +30,9 @@ public class Whirlwind : MonoBehaviour, IAttackable
         int tick = 0;
         while(tick < 4)
         {
-            Debug.Log("휠윈드다! 오라오라");
             ++tick;
             yield return new WaitForSeconds(0.5f);
+            Debug.Log("휠윈드다! 오라오라");
         }
 
         _attack.AttackFinish();
