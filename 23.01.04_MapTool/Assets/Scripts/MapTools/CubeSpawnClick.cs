@@ -32,7 +32,6 @@ public class CubeSpawnClick : MonoBehaviour
             {
                 if (hit.transform.CompareTag("Map"))
                 {
-                    Debug.Log(hit.point);
                     CheckPosition(hit.point);
                     SpawnCube();
                 }

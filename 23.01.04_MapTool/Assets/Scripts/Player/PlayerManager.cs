@@ -6,12 +6,6 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private GameObject _player;
 
-    private void Awake()
-    {
-       _player = transform.GetChild(0).gameObject;
-        _player.SetActive(false);
-    }
-
     private void OnEnable()
     {
         GameManager.Instance.PlayerSpawn.AddListener(SpawnPlayer);
