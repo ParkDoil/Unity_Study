@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class CubeSpawnClick : MonoBehaviour
 {
-    private GameObject _selectObject;
+    public enum NowSelect
+    {
+        EMPTY,
+        BUSH,
+        RIVER,
+        WALL
+    }
 
     private Vector3 _spawnPosition;
 
@@ -24,11 +30,6 @@ public class CubeSpawnClick : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void SelectObject(GameObject _object)
-    {
-        _selectObject = _object;
     }
 
     private void CheckPosition(Vector3 _position)
@@ -65,5 +66,11 @@ public class CubeSpawnClick : MonoBehaviour
             _spawnPosition.z = Mathf.Round(_position.z);
         }
         #endregion
+        _spawnPosition.y = _position.y;
+    }
+
+    private void SpawnCube()
+    {
+        
     }
 }
