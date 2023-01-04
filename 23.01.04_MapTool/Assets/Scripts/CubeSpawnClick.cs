@@ -148,19 +148,22 @@ public class CubeSpawnClick : MonoBehaviour
         {
             case InputManager.NowSelect.EMPTY   :
                 break;
+
             case InputManager.NowSelect.BUSH    :
                 _spawnCube.tag = "Bush";
                 _spawnCube.transform.position = _spawnPosition;
                 _spawnCube.GetComponent<MeshRenderer>().material = _cubeMat[1];
                 _spawnCube.SetActive(true);
                 break;
-            case InputManager.NowSelect.RIVER:
+
+            case InputManager.NowSelect.RIVER   :
                 _spawnCube.tag = "River";
                 _spawnCube.transform.position = _spawnPosition;
                 _spawnCube.GetComponent<MeshRenderer>().material = _cubeMat[2];
                 _spawnCube.SetActive(true);
                 break;
-            case InputManager.NowSelect.WALL:
+
+            case InputManager.NowSelect.WALL    :
                 _spawnCube.tag = "Wall";
                 _spawnCube.transform.position = _spawnPosition;
                 _spawnCube.GetComponent<MeshRenderer>().material = _cubeMat[3];
