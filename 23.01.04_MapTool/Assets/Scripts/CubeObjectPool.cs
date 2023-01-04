@@ -7,19 +7,44 @@ public class CubeObjectPool : MonoBehaviour
     [SerializeField] private GameObject _cube;
     [SerializeField] private GameObject _parentObject;
 
-    public GameObject[] ObjectPool; //{ get; set; }
+    private Queue<GameObject> CubesGroup = new Queue<GameObject>();
 
     private void Awake()
     {
-        ObjectPool = new GameObject[400];
-
         for (int i = 0; i < 400; i++)
         {
-            ObjectPool[i] = Instantiate(_cube);
-            ObjectPool[i].transform.parent = _parentObject.transform;
-            ObjectPool[i].transform.position = _parentObject.transform.position;
-            ObjectPool[i].SetActive(false);
+            CubesGroup.Enqueue(CreateCube());
         }
+    }
+
+    private GameObject CreateCube()
+    {
+        GameObject _object = Instantiate(_cube);
+        _object.transform.SetParent(_parentObject.transform);
+        _object.SetActive(false);
+        return _object;
+    }
+
+    public GameObject GetCube()
+    {
+        if (CubesGroup.Count > 0)
+        {
+            GameObject _popCube = CubesGroup.Dequeue();
+            return _popCube;
+        }
+        else
+        {
+            GameObject _newCube = CreateCube();
+            return _newCube;
+        }
+
+    }
+
+    public void ReturnCube(GameObject _returnedCube)
+    {
+        _returnedCube.SetActive(false);
+        _returnedCube.transform.SetParent(_parentObject.transform);
+        CubesGroup.Enqueue(_returnedCube);
     }
 
 }
