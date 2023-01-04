@@ -49,8 +49,6 @@ public class UIManager : MonoBehaviour
 
     }
 
-
-
     private void OnDisable()
     {
         _input.ChangeSelect.RemoveListener(ChangeUI);

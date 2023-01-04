@@ -44,5 +44,10 @@ public class InputManager : MonoBehaviour
             ChangeSelect.Invoke(_nowSelect);
         }
         #endregion
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            GameManager.Instance.StartGame();
+        }
     }
 }
