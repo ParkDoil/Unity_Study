@@ -15,19 +15,19 @@ public class CubeSpawnClick : MonoBehaviour
     [SerializeField] private Material[] _cubeMat;
     [SerializeField] private CubeObjectPool _cubes;
 
-    private int _spawnIndex;
     private Vector3 _spawnPosition;
     private int _nowSelectCube;
+
+    private Material _prevMaterial;
 
     private void Start()
     {
         _cubes = GetComponent<CubeObjectPool>();
-        _spawnIndex = 0;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))  // 마우스가 클릭 되면
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -43,7 +43,7 @@ public class CubeSpawnClick : MonoBehaviour
                 #region 이미 큐브가 생성된 위치라면 변경시키는 코드
                 else if (hit.transform.CompareTag("Bush"))
                 {
-                    if(_nowSelectCube == (int)NowSelect.BUSH || _nowSelectCube == (int)NowSelect.EMPTY)
+                    if(_nowSelectCube == (int)NowSelect.BUSH)
                     {
                         return;
                     }
@@ -55,7 +55,7 @@ public class CubeSpawnClick : MonoBehaviour
                 }
                 else if (hit.transform.CompareTag("River"))
                 {
-                    if (_nowSelectCube == (int)NowSelect.RIVER || _nowSelectCube == (int)NowSelect.EMPTY)
+                    if (_nowSelectCube == (int)NowSelect.RIVER)
                     {
                         return;
                     }
@@ -67,7 +67,7 @@ public class CubeSpawnClick : MonoBehaviour
                 }
                 else if(hit.transform.CompareTag("Wall"))
                 {
-                    if (_nowSelectCube == (int)NowSelect.WALL || _nowSelectCube == (int)NowSelect.EMPTY)
+                    if (_nowSelectCube == (int)NowSelect.WALL)
                     {
                         return;
                     }
@@ -84,41 +84,47 @@ public class CubeSpawnClick : MonoBehaviour
         #region 현재 선택한 큐브
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _nowSelectCube = (int)NowSelect.BUSH;
+            _nowSelectCube = (int)NowSelect.EMPTY;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            _nowSelectCube = (int)NowSelect.RIVER;
+            _nowSelectCube = (int)NowSelect.BUSH;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            _nowSelectCube = (int)NowSelect.WALL;
+            _nowSelectCube = (int)NowSelect.RIVER;
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            _nowSelectCube = (int)NowSelect.EMPTY;
+            _nowSelectCube = (int)NowSelect.WALL;
         }
         #endregion
     }
 
     private void ChangeCube(RaycastHit hit)
     {
-        if (_nowSelectCube == (int)NowSelect.BUSH)
+        if(_nowSelectCube == (int)NowSelect.EMPTY)
         {
             hit.transform.gameObject.GetComponent<MeshRenderer>().material = _cubeMat[0];
+            hit.transform.gameObject.tag = "Untagged";
+            _cubes.ReturnCube(hit.transform.gameObject);
+        }
+        else if (_nowSelectCube == (int)NowSelect.BUSH)
+        {
+            hit.transform.gameObject.GetComponent<MeshRenderer>().material = _cubeMat[1];
             hit.transform.gameObject.tag = "Bush";
         }
         else if (_nowSelectCube == (int)NowSelect.RIVER)
         {
-            hit.transform.gameObject.GetComponent<MeshRenderer>().material = _cubeMat[1];
+            hit.transform.gameObject.GetComponent<MeshRenderer>().material = _cubeMat[2];
             hit.transform.gameObject.tag = "River";
         }
         else if(_nowSelectCube == (int)NowSelect.WALL)
         {
-            hit.transform.gameObject.GetComponent<MeshRenderer>().material = _cubeMat[2];
+            hit.transform.gameObject.GetComponent<MeshRenderer>().material = _cubeMat[3];
             hit.transform.gameObject.tag = "Wall";
         }
     }
@@ -162,30 +168,29 @@ public class CubeSpawnClick : MonoBehaviour
 
     private void SpawnCube()
     {
+
+        GameObject _spawnCube = _cubes.GetCube();
         switch (_nowSelectCube)
         {
             case (int)NowSelect.EMPTY   :
                 break;
             case (int)NowSelect.BUSH    :
-                _cubes.ObjectPool[_spawnIndex].tag = "Bush";
-                _cubes.ObjectPool[_spawnIndex].transform.position = _spawnPosition;
-                _cubes.ObjectPool[_spawnIndex].GetComponent<MeshRenderer>().material = _cubeMat[0];
-                _cubes.ObjectPool[_spawnIndex].SetActive(true);
-                ++_spawnIndex;
+                _spawnCube.tag = "Bush";
+                _spawnCube.transform.position = _spawnPosition;
+                _spawnCube.GetComponent<MeshRenderer>().material = _cubeMat[1];
+                _spawnCube.SetActive(true);
                 break;
             case (int)NowSelect.RIVER:
-                _cubes.ObjectPool[_spawnIndex].tag = "River";
-                _cubes.ObjectPool[_spawnIndex].transform.position = _spawnPosition;
-                _cubes.ObjectPool[_spawnIndex].GetComponent<MeshRenderer>().material = _cubeMat[1];
-                _cubes.ObjectPool[_spawnIndex].SetActive(true);
-                ++_spawnIndex;
+                _spawnCube.tag = "River";
+                _spawnCube.transform.position = _spawnPosition;
+                _spawnCube.GetComponent<MeshRenderer>().material = _cubeMat[2];
+                _spawnCube.SetActive(true);
                 break;
             case (int)NowSelect.WALL:
-                _cubes.ObjectPool[_spawnIndex].tag = "Wall";
-                _cubes.ObjectPool[_spawnIndex].transform.position = _spawnPosition;
-                _cubes.ObjectPool[_spawnIndex].GetComponent<MeshRenderer>().material = _cubeMat[2];
-                _cubes.ObjectPool[_spawnIndex].SetActive(true);
-                ++_spawnIndex;
+                _spawnCube.tag = "Wall";
+                _spawnCube.transform.position = _spawnPosition;
+                _spawnCube.GetComponent<MeshRenderer>().material = _cubeMat[3];
+                _spawnCube.SetActive(true);
                 break;
         }
 
