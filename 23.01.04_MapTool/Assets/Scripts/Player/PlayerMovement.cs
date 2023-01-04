@@ -29,22 +29,22 @@ public class PlayerMovement : MonoBehaviour
     {
         _prevTransform = transform;
 
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(_nowSpeed * Time.deltaTime * Vector3.forward);
         }
 
-        if(Input.GetKey(KeyCode.DownArrow))
+        if(Input.GetKey(KeyCode.S))
         {
             transform.Translate(_nowSpeed * Time.deltaTime * Vector3.back);
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(_nowSpeed * Time.deltaTime * Vector3.left);
         }
 
-        if(Input.GetKey(KeyCode.RightArrow))
+        if(Input.GetKey(KeyCode.D))
         {
             transform.Translate(_nowSpeed * Time.deltaTime * Vector3.right);
         }
