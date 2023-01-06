@@ -17,6 +17,16 @@ public class InputManager : MonoBehaviour
 
     public UnityEvent<NowSelect> ChangeSelect = new UnityEvent<NowSelect>();
 
+    [SerializeField] GameObject _map;
+    private MapData _data;
+
+    private void Awake()
+    {
+        _data = new MapData();
+        _data.SetCube = new Queue<GameObject>();
+        _data.AlreadyExsit = false;
+    }
+
     private void Update()
     {
         #region 현재 선택한 큐브
@@ -45,9 +55,43 @@ public class InputManager : MonoBehaviour
         }
         #endregion
 
-        if(Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             GameManager.Instance.StartGame();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            _data.AlreadyExsit = true;
+
+            for (int i = 0; i < _map.transform.childCount; ++i)
+            {
+                _data.SetCube.Enqueue(_map.transform.GetChild(i).gameObject);
+            }
+
+            DataManager.Instance.SaveMap(_data);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            _data = DataManager.Instance.LoadMap();
+            
+            if (_data.AlreadyExsit != true)
+            {
+                return;
+            }
+            else
+            {
+                _map = _data.NowMap;
+                GameObject _loadGameObject;
+
+                while(_data.SetCube.Count != 0)
+                {
+                    _loadGameObject = _data.SetCube.Dequeue();
+                    _loadGameObject.transform.SetParent(_map.transform);
+                }
+
+            }
         }
     }
 }
