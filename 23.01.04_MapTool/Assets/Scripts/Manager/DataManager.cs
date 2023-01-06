@@ -16,11 +16,16 @@ public class MapData
 public class DataManager : SingletonBehaviour<DataManager>
 {
     private string _path;
-    private const string _fileName = "MapData.json";
+    private const string _editorFilePath = "/Resources/MapData.json";
+    private const string _buildFilePath = "MapData.json";
 
     private void OnEnable()
     {
-        _path = Path.Combine(Application.dataPath + "/Data/", _fileName);
+#if UNITY_EDITOR
+        _path = Application.dataPath + _editorFilePath;
+#else
+         _path = Application.dataPath + _buildFilePath; 
+#endif
         print(_path);
     }
 
