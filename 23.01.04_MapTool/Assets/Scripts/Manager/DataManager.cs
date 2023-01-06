@@ -26,7 +26,7 @@ public class DataManager : SingletonBehaviour<DataManager>
 
     public void SaveMap(MapData _nowMap)
     {
-        string _data = JsonUtility.ToJson(_nowMap, true);
+        string _data = JsonUtility.ToJson(_nowMap,true);
         File.WriteAllText(_path, _data);
     }
 

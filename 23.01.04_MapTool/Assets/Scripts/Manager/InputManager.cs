@@ -25,7 +25,6 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        _data = new MapData();
 
         _setCubeScripts = GetComponent<CubeSpawnClick>();
         _objPool = GetComponent<CubeObjectPool>();
@@ -66,6 +65,8 @@ public class InputManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
+            _data = new MapData();
+
             _data.AlreadyExist = true;
 
             for (int i = 0; i < _map.transform.childCount; ++i)
