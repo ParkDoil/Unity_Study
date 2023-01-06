@@ -20,11 +20,15 @@ public class InputManager : MonoBehaviour
     [SerializeField] GameObject _map;
     private MapData _data;
 
+    private CubeSpawnClick _setCubeScripts;
+    private CubeObjectPool _objPool;
+
     private void Awake()
     {
         _data = new MapData();
-        _data.SetCube = new Queue<GameObject>();
-        _data.AlreadyExsit = false;
+
+        _setCubeScripts = GetComponent<CubeSpawnClick>();
+        _objPool = GetComponent<CubeObjectPool>();
     }
 
     private void Update()
@@ -62,11 +66,13 @@ public class InputManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            _data.AlreadyExsit = true;
 
             for (int i = 0; i < _map.transform.childCount; ++i)
             {
-                _data.SetCube.Enqueue(_map.transform.GetChild(i).gameObject);
+                _data.X.Add(_map.transform.GetChild(i).position.x);
+                _data.Y.Add(_map.transform.GetChild(i).position.y);
+                _data.Z.Add(_map.transform.GetChild(i).position.z);
+                _data.Type.Add(_map.transform.GetChild(i).tag);
             }
 
             DataManager.Instance.SaveMap(_data);
@@ -76,21 +82,36 @@ public class InputManager : MonoBehaviour
         {
             _data = DataManager.Instance.LoadMap();
             
-            if (_data.AlreadyExsit != true)
+            if (_data.AlreadyExist != true)
             {
                 return;
             }
             else
             {
-                _map = _data.NowMap;
-                GameObject _loadGameObject;
+                GameObject _cube;
 
-                while(_data.SetCube.Count != 0)
+                for (int i = 0; i < _data.X.Count; ++i)
                 {
-                    _loadGameObject = _data.SetCube.Dequeue();
-                    _loadGameObject.transform.SetParent(_map.transform);
-                }
+                    _cube = _objPool.GetCube();
+                    _cube.transform.position = new Vector3(_data.X[i], _data.Y[i], _data.Z[i]);
 
+                    switch(_data.Type[i])
+                    {
+                        case "Bush":
+                            _cube.GetComponent<MeshRenderer>().material = _setCubeScripts.CubeMat[1];
+                            break;
+
+                        case "River":
+                            _cube.GetComponent<MeshRenderer>().material = _setCubeScripts.CubeMat[2];
+                            break;
+
+                        case "Wall":
+                            _cube.GetComponent<MeshRenderer>().material = _setCubeScripts.CubeMat[3];
+                            break;
+                    }
+
+                    _cube.transform.SetParent(_map.transform);
+                }
             }
         }
     }

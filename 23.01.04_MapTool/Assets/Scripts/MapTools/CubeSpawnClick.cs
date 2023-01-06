@@ -5,7 +5,8 @@ using UnityEngine;
 public class CubeSpawnClick : MonoBehaviour
 {
 
-    [SerializeField] private Material[] _cubeMat;
+    [field: SerializeField] public Material[] CubeMat { get; private set; }
+
     [SerializeField] private Transform _setCubeObject;
 
     private InputManager _input;
@@ -15,6 +16,10 @@ public class CubeSpawnClick : MonoBehaviour
     private int _nowSelectCube;
 
     private Material _prevMaterial;
+
+    private const string _bush = "Bush";
+    private const string _river = "River";
+    private const string _wall = "Wall";
 
     private void Start()
     {
@@ -37,7 +42,7 @@ public class CubeSpawnClick : MonoBehaviour
                     SpawnCube();
                 }
                 #region 이미 큐브가 생성된 위치라면 변경시키는 코드
-                else if (hit.transform.CompareTag("Bush"))
+                else if (hit.transform.CompareTag(_bush))
                 {
                     if(_input._nowSelect == InputManager.NowSelect.BUSH)
                     {
@@ -49,7 +54,7 @@ public class CubeSpawnClick : MonoBehaviour
                         ChangeCube(hit);
                     }
                 }
-                else if (hit.transform.CompareTag("River"))
+                else if (hit.transform.CompareTag(_river))
                 {
                     if (_input._nowSelect == InputManager.NowSelect.RIVER)
                     {
@@ -61,7 +66,7 @@ public class CubeSpawnClick : MonoBehaviour
                         ChangeCube(hit);
                     }
                 }
-                else if(hit.transform.CompareTag("Wall"))
+                else if(hit.transform.CompareTag(_wall))
                 {
                     if (_input._nowSelect == InputManager.NowSelect.WALL)
                     {
@@ -82,24 +87,24 @@ public class CubeSpawnClick : MonoBehaviour
     {
         if(_input._nowSelect == InputManager.NowSelect.EMPTY)
         {
-            hit.transform.gameObject.GetComponent<MeshRenderer>().material = _cubeMat[0];
+            hit.transform.gameObject.GetComponent<MeshRenderer>().material = CubeMat[0];
             hit.transform.gameObject.tag = "Untagged";
             _cubes.ReturnCube(hit.transform.gameObject);
         }
         else if (_input._nowSelect == InputManager.NowSelect.BUSH)
         {
-            hit.transform.gameObject.GetComponent<MeshRenderer>().material = _cubeMat[1];
-            hit.transform.gameObject.tag = "Bush";
+            hit.transform.gameObject.GetComponent<MeshRenderer>().material = CubeMat[1];
+            hit.transform.gameObject.tag = _bush;
         }
         else if (_input._nowSelect == InputManager.NowSelect.RIVER)
         {
-            hit.transform.gameObject.GetComponent<MeshRenderer>().material = _cubeMat[2];
-            hit.transform.gameObject.tag = "River";
+            hit.transform.gameObject.GetComponent<MeshRenderer>().material = CubeMat[2];
+            hit.transform.gameObject.tag = _river;
         }
         else if(_input._nowSelect == InputManager.NowSelect.WALL)
         {
-            hit.transform.gameObject.GetComponent<MeshRenderer>().material = _cubeMat[3];
-            hit.transform.gameObject.tag = "Wall";
+            hit.transform.gameObject.GetComponent<MeshRenderer>().material = CubeMat[3];
+            hit.transform.gameObject.tag = _wall;
         }
     }
 
@@ -142,36 +147,34 @@ public class CubeSpawnClick : MonoBehaviour
 
     private void SpawnCube()
     {
-
         GameObject _spawnCube = _cubes.GetCube();
-        _spawnCube.transform.SetParent(_setCubeObject);
 
         switch (_input._nowSelect)
         {
-            case InputManager.NowSelect.EMPTY   :
+            case InputManager.NowSelect.EMPTY:
                 break;
 
-            case InputManager.NowSelect.BUSH    :
-                _spawnCube.tag = "Bush";
-                _spawnCube.transform.position = _spawnPosition;
-                _spawnCube.GetComponent<MeshRenderer>().material = _cubeMat[1];
-                _spawnCube.SetActive(true);
+            case InputManager.NowSelect.BUSH:
+                SettingCube(_spawnCube, _bush, 1);
                 break;
 
-            case InputManager.NowSelect.RIVER   :
-                _spawnCube.tag = "River";
-                _spawnCube.transform.position = _spawnPosition;
-                _spawnCube.GetComponent<MeshRenderer>().material = _cubeMat[2];
-                _spawnCube.SetActive(true);
+            case InputManager.NowSelect.RIVER:
+                SettingCube(_spawnCube, _river, 2);
                 break;
 
-            case InputManager.NowSelect.WALL    :
-                _spawnCube.tag = "Wall";
-                _spawnCube.transform.position = _spawnPosition;
-                _spawnCube.GetComponent<MeshRenderer>().material = _cubeMat[3];
-                _spawnCube.SetActive(true);
+            case InputManager.NowSelect.WALL:
+                SettingCube(_spawnCube, _wall, 3);
                 break;
         }
 
+    }
+
+    private void SettingCube(GameObject _spawnedCube, string _type, int _matIndex)
+    {
+        _spawnedCube.transform.SetParent(_setCubeObject);
+        _spawnedCube.tag = _type;
+        _spawnedCube.transform.position = _spawnPosition;
+        _spawnedCube.GetComponent<MeshRenderer>().material = CubeMat[_matIndex];
+        _spawnedCube.SetActive(true);
     }
 }
