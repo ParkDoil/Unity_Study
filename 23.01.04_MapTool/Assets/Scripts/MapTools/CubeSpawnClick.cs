@@ -6,6 +6,7 @@ public class CubeSpawnClick : MonoBehaviour
 {
 
     [SerializeField] private Material[] _cubeMat;
+    [SerializeField] private Transform _setCubeObject;
 
     private InputManager _input;
     private CubeObjectPool _cubes;
@@ -143,6 +144,8 @@ public class CubeSpawnClick : MonoBehaviour
     {
 
         GameObject _spawnCube = _cubes.GetCube();
+        _spawnCube.transform.SetParent(_setCubeObject);
+
         switch (_input._nowSelect)
         {
             case InputManager.NowSelect.EMPTY   :

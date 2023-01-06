@@ -655,6 +655,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 69dae2f213c8d01428b17c002abed45d, type: 2}
   - {fileID: 2100000, guid: b42a7c7f335c7204d86151db42412e7e, type: 2}
   - {fileID: 2100000, guid: eda0a6bda64a07b4d820bb54d0d5b2d0, type: 2}
+  _setCubeObject: {fileID: 568827756}
 --- !u!4 &1254771710
 Transform:
   m_ObjectHideFlags: 0
