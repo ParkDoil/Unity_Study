@@ -8,9 +8,7 @@ public class MapData
 {
     public bool AlreadyExist;
 
-    public List<float> X = new List<float>();
-    public List<float> Y = new List<float>();
-    public List<float> Z = new List<float>();
+    public List<Vector3> ObjPosition = new List<Vector3>();
     public List<string> Type = new List<string>();
 }
 
@@ -18,7 +16,7 @@ public class MapData
 public class DataManager : SingletonBehaviour<DataManager>
 {
     private string _path;
-    private const string _fileName = "MapData";
+    private const string _fileName = "MapData.json";
 
     private void OnEnable()
     {
@@ -28,8 +26,7 @@ public class DataManager : SingletonBehaviour<DataManager>
 
     public void SaveMap(MapData _nowMap)
     {
-        string _data = JsonUtility.ToJson(_nowMap);
-        print(_data);
+        string _data = JsonUtility.ToJson(_nowMap, true);
         File.WriteAllText(_path, _data);
     }
 

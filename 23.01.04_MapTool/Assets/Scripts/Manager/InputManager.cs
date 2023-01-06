@@ -66,12 +66,11 @@ public class InputManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
+            _data.AlreadyExist = true;
 
             for (int i = 0; i < _map.transform.childCount; ++i)
             {
-                _data.X.Add(_map.transform.GetChild(i).position.x);
-                _data.Y.Add(_map.transform.GetChild(i).position.y);
-                _data.Z.Add(_map.transform.GetChild(i).position.z);
+                _data.ObjPosition.Add(_map.transform.GetChild(i).position);
                 _data.Type.Add(_map.transform.GetChild(i).tag);
             }
 
@@ -90,27 +89,31 @@ public class InputManager : MonoBehaviour
             {
                 GameObject _cube;
 
-                for (int i = 0; i < _data.X.Count; ++i)
+                for (int i = 0; i < _data.Type.Count; ++i)
                 {
                     _cube = _objPool.GetCube();
-                    _cube.transform.position = new Vector3(_data.X[i], _data.Y[i], _data.Z[i]);
+                    _cube.transform.position = _data.ObjPosition[i];
 
                     switch(_data.Type[i])
                     {
                         case "Bush":
                             _cube.GetComponent<MeshRenderer>().material = _setCubeScripts.CubeMat[1];
+                            _cube.tag = _data.Type[i];
                             break;
 
                         case "River":
                             _cube.GetComponent<MeshRenderer>().material = _setCubeScripts.CubeMat[2];
+                            _cube.tag = _data.Type[i];
                             break;
 
                         case "Wall":
                             _cube.GetComponent<MeshRenderer>().material = _setCubeScripts.CubeMat[3];
+                            _cube.tag = _data.Type[i];
                             break;
                     }
 
                     _cube.transform.SetParent(_map.transform);
+                    _cube.SetActive(true);
                 }
             }
         }
